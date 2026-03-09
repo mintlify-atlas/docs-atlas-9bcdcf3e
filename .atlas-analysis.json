@@ -1,0 +1,39 @@
+{
+  "projectType": "general",
+  "projectName": "Astro Landing Page Example",
+  "projectDescription": "A minimal Astro starter template for building landing pages and static websites.",
+  "theme": "palm",
+  "primaryColor": "#7c7c7c",
+  "lightColor": "#090708",
+  "darkColor": "#c890b2",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": ["introduction", "quickstart", "installation"]
+      },
+      {
+        "group": "Guides",
+        "pages": ["guides/project-structure", "guides/development", "guides/deployment"]
+      },
+      {
+        "group": "Reference",
+        "pages": ["reference/configuration", "reference/commands"]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Minimal Astro starter template",
+    "Static site generation",
+    "Fast development server",
+    "Production-ready build system",
+    "TypeScript support"
+  ],
+  "publicApiSurface": [
+    "npm run dev",
+    "npm run build",
+    "npm run preview",
+    "astro dev",
+    "astro build"
+  ]
+}
