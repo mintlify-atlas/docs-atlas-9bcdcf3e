@@ -1,0 +1,97 @@
+---
+title: Introduction
+description: Learn about the Astro Landing Page Example and what makes it a great starting point for your next project
+---
+
+Welcome to the Astro Landing Page Example! This is a minimal, lightweight starter template built with Astro that helps you quickly create fast, content-focused landing pages.
+
+## What is Astro?
+
+Astro is a modern web framework designed for building fast, content-focused websites. It allows you to use your favorite JavaScript frameworks (React, Vue, Svelte, etc.) while shipping zero JavaScript by default, resulting in incredibly fast page loads.
+
+## Why use this template?
+
+This landing page template is built on Astro's minimal starter kit, providing you with:
+
+<CardGroup cols={2}>
+  <Card title="Lightning fast" icon="bolt">
+    Zero JavaScript by default means your landing page loads instantly
+  </Card>
+  <Card title="Simple structure" icon="folder-tree">
+    Clean, minimal file structure that's easy to understand and customize
+  </Card>
+  <Card title="TypeScript support" icon="code">
+    Built-in TypeScript configuration with strict type checking
+  </Card>
+  <Card title="Developer friendly" icon="heart">
+    Hot module reloading and excellent developer experience out of the box
+  </Card>
+</CardGroup>
+
+## Project structure
+
+The template follows Astro's standard project structure:
+
+```text
+/
+├── public/
+│   ├── favicon.ico
+│   └── favicon.svg
+├── src/
+│   └── pages/
+│       └── index.astro
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
+```
+
+### Key directories
+
+- **public/** - Static assets like images, fonts, and favicons that are served as-is
+- **src/pages/** - Astro pages that become routes in your site. Each `.astro` or `.md` file becomes a route based on its filename
+- **src/components/** - You can add reusable Astro, React, Vue, or Svelte components here (not included in minimal template)
+
+<Info>
+  Astro uses file-based routing. A file at `src/pages/about.astro` automatically becomes available at `/about`.
+</Info>
+
+## Key features
+
+### Zero configuration
+
+The template works out of the box with minimal configuration. The `astro.config.mjs` is intentionally simple:
+
+```javascript
+import { defineConfig } from 'astro/config';
+
+export default defineConfig({});
+```
+
+### TypeScript by default
+
+TypeScript support is built-in with strict type checking enabled in `tsconfig.json`:
+
+```json
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}
+```
+
+### Modern tooling
+
+The template uses Astro's latest version (5.17.1) with all the modern features you'd expect:
+
+- Hot module reloading during development
+- Optimized production builds
+- Built-in preview server
+- Support for all major UI frameworks
+
+## What's next?
+
+Ready to get started? Head over to the [Quickstart](/quickstart) guide to create your first landing page, or check out the [Installation](/installation) page for detailed setup instructions.
+
+<Tip>
+  This template is perfect for creating marketing pages, product launches, portfolio sites, and any other single-page applications that need to be fast and SEO-friendly.
+</Tip>

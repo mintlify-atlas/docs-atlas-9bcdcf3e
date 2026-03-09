@@ -1,0 +1,373 @@
+---
+title: Commands
+description: Available npm scripts and CLI commands for developing, building, and deploying your Astro landing page
+---
+
+This reference documents all available commands for working with your Astro landing page project. All commands should be run from the root of your project directory.
+
+## Prerequisites
+
+Before running any commands, ensure you have installed project dependencies:
+
+```bash
+npm install
+```
+
+This installs Astro and all required packages defined in `package.json`.
+
+## Development commands
+
+### Start development server
+
+```bash
+npm run dev
+```
+
+Starts the Astro development server with hot module replacement (HMR). Your site will be available at `http://localhost:4321`.
+
+**Features:**
+- Hot reloading when you edit files
+- Fast refresh for `.astro` components
+- Instant feedback on syntax errors
+- Automatic TypeScript type checking
+
+<Info>
+  The development server watches for file changes in `src/` and automatically updates your browser. No manual refresh needed.
+</Info>
+
+**Options:**
+
+You can pass additional flags to the dev server:
+
+```bash
+# Run on a different port
+npm run dev -- --port 3000
+
+# Listen on all network interfaces
+npm run dev -- --host
+
+# Open browser automatically
+npm run dev -- --open
+```
+
+<Note>
+  The `--` syntax passes arguments through npm to the underlying Astro command.
+</Note>
+
+## Build commands
+
+### Production build
+
+```bash
+npm run build
+```
+
+Builds your site for production deployment. This command:
+
+1. Compiles all `.astro` files to optimized HTML
+2. Bundles and minifies JavaScript
+3. Optimizes CSS and removes unused styles
+4. Processes and optimizes images
+5. Generates the final static site in `./dist/`
+
+**Output:**
+
+The build process creates a `dist` directory containing:
+- Static HTML files for each page
+- Optimized JavaScript bundles
+- Minified CSS files
+- Copied assets from `public/`
+
+<CodeGroup>
+
+```bash Standard build
+npm run build
+```
+
+```bash Build with verbose output
+npm run build -- --verbose
+```
+
+```bash Build with custom config
+npm run build -- --config ./custom.config.mjs
+```
+
+</CodeGroup>
+
+<Warning>
+  Always test your production build locally using `npm run preview` before deploying to ensure everything works correctly.
+</Warning>
+
+### Preview production build
+
+```bash
+npm run preview
+```
+
+Starts a local server to preview your production build. This serves the static files from `./dist/` exactly as they would appear on a production server.
+
+**Use cases:**
+- Test production build before deployment
+- Verify optimizations are working correctly
+- Check that all links and assets resolve properly
+- Validate responsive design at production speed
+
+<Info>
+  You must run `npm run build` before using the preview command. The preview server only serves pre-built files.
+</Info>
+
+**Preview with custom port:**
+
+```bash
+npm run preview -- --port 8080
+```
+
+## Astro CLI commands
+
+### Run Astro CLI directly
+
+```bash
+npm run astro
+```
+
+Executes the Astro CLI with any command you specify. This is a passthrough to the Astro command-line interface.
+
+**Common Astro CLI commands:**
+
+<Accordion title="Get CLI help">
+  ```bash
+  npm run astro -- --help
+  ```
+  
+  Displays all available Astro CLI commands and options.
+</Accordion>
+
+<Accordion title="Add integrations">
+  ```bash
+  npm run astro add react
+  npm run astro add tailwind
+  npm run astro add sitemap
+  ```
+  
+  Installs and configures Astro integrations. The CLI automatically updates `astro.config.mjs` and installs required dependencies.
+</Accordion>
+
+<Accordion title="Check for issues">
+  ```bash
+  npm run astro check
+  ```
+  
+  Runs diagnostics on your project:
+  - TypeScript type checking
+  - Accessibility checks in `.astro` files
+  - Validation of configuration files
+</Accordion>
+
+<Accordion title="View Astro info">
+  ```bash
+  npm run astro info
+  ```
+  
+  Displays information about your current Astro environment:
+  - Astro version
+  - Node.js version
+  - Operating system
+  - Installed integrations
+</Accordion>
+
+<Accordion title="Sync type definitions">
+  ```bash
+  npm run astro sync
+  ```
+  
+  Generates TypeScript type definitions for content collections and other Astro features. Useful after modifying configuration.
+</Accordion>
+
+<Accordion title="Create new files">
+  ```bash
+  npm run astro add page about
+  npm run astro add component Header
+  ```
+  
+  Generates new pages or components with boilerplate code.
+</Accordion>
+
+## Command cheat sheet
+
+Quick reference for all available commands:
+
+| Command | Action |
+| :------ | :----- |
+| `npm install` | Install project dependencies |
+| `npm run dev` | Start development server at `localhost:4321` |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run astro` | Run Astro CLI commands |
+| `npm run astro -- --help` | Display Astro CLI help |
+| `npm run astro add [integration]` | Add and configure an integration |
+| `npm run astro check` | Check project for issues |
+| `npm run astro info` | Display environment information |
+| `npm run astro sync` | Generate type definitions |
+
+## Development workflow
+
+Here's a typical development workflow using these commands:
+
+<CodeGroup>
+
+```bash Initial setup
+# Clone the repository
+git clone <repository-url>
+cd <project-directory>
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+```bash Development cycle
+# Make changes to files in src/
+# Server automatically reloads
+
+# Check for TypeScript errors
+npm run astro check
+
+# Continue developing
+npm run dev
+```
+
+```bash Pre-deployment
+# Build for production
+npm run build
+
+# Preview the build
+npm run preview
+
+# Verify everything works correctly
+# Then deploy the dist/ directory
+```
+
+</CodeGroup>
+
+## CI/CD integration
+
+These commands integrate seamlessly into continuous integration pipelines:
+
+<CodeGroup>
+
+```yaml GitHub Actions
+name: Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build
+      - run: npm run astro check
+```
+
+```yaml GitLab CI
+build:
+  image: node:18
+  script:
+    - npm install
+    - npm run build
+    - npm run astro check
+  artifacts:
+    paths:
+      - dist/
+```
+
+```json Netlify configuration
+{
+  "build": {
+    "command": "npm run build",
+    "publish": "dist"
+  }
+}
+```
+
+</CodeGroup>
+
+<Note>
+  Most hosting platforms (Vercel, Netlify, Cloudflare Pages) automatically detect Astro projects and use the correct build command.
+</Note>
+
+## Troubleshooting commands
+
+### Clear cache and rebuild
+
+If you encounter build issues, try clearing cached files:
+
+```bash
+# Remove build artifacts
+rm -rf dist/
+
+# Remove Astro cache
+rm -rf .astro/
+
+# Remove dependencies
+rm -rf node_modules/
+
+# Reinstall and rebuild
+npm install
+npm run build
+```
+
+### Debug build issues
+
+Run the build with verbose logging:
+
+```bash
+npm run build -- --verbose
+```
+
+### Check for outdated packages
+
+Ensure you're using compatible versions:
+
+```bash
+# Check for updates
+npm outdated
+
+# Update Astro
+npm install astro@latest
+```
+
+<Warning>
+  Major version updates may include breaking changes. Always review the [Astro changelog](https://github.com/withastro/astro/blob/main/packages/astro/CHANGELOG.md) before upgrading.
+</Warning>
+
+## Performance tips
+
+<Accordion title="Use development server for iteration">
+  The `dev` command provides the fastest feedback loop. Only use `build` and `preview` when you need to test production-specific behavior.
+</Accordion>
+
+<Accordion title="Leverage parallel builds">
+  Astro automatically parallelizes builds across CPU cores. Ensure your build environment has adequate resources for optimal performance.
+</Accordion>
+
+<Accordion title="Monitor build output size">
+  After running `npm run build`, check the size of your `dist/` directory. Astro displays bundle sizes in the build output.
+</Accordion>
+
+<Accordion title="Use astro check in pre-commit hooks">
+  Add `npm run astro check` to your Git pre-commit hooks to catch errors before they reach CI/CD.
+</Accordion>
+
+## Next steps
+
+- Learn about [configuration options](/reference/configuration) for customizing build behavior
+- Explore [Astro CLI documentation](https://docs.astro.build/en/reference/cli-reference/) for advanced commands
+- Set up [deployment automation](https://docs.astro.build/en/guides/deploy/) for your preferred hosting platform

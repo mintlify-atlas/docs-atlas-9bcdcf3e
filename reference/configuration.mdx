@@ -1,0 +1,240 @@
+---
+title: Configuration
+description: Learn how to configure your Astro landing page project with astro.config.mjs and tsconfig.json
+---
+
+This guide covers the configuration options available in your Astro landing page project. You can customize the build process, TypeScript settings, and Astro behavior through configuration files.
+
+## Astro configuration
+
+The `astro.config.mjs` file controls how Astro builds and serves your site. This minimal starter uses a basic configuration, but you can extend it with numerous options.
+
+### Basic configuration
+
+The default configuration uses Astro's standard settings:
+
+```javascript astro.config.mjs
+// @ts-check
+import { defineConfig } from 'astro/config';
+
+// https://astro.build/config
+export default defineConfig({});
+```
+
+### Common configuration options
+
+While the starter template uses default settings, you can customize your project by adding configuration options:
+
+<ParamField path="site" type="string">
+  The URL where your site will be deployed. Required for generating sitemaps and canonical URLs.
+  
+  ```javascript
+  export default defineConfig({
+    site: 'https://example.com'
+  });
+  ```
+</ParamField>
+
+<ParamField path="base" type="string">
+  The base path where your site will be deployed. Useful when deploying to a subdirectory.
+  
+  ```javascript
+  export default defineConfig({
+    base: '/my-app'
+  });
+  ```
+</ParamField>
+
+<ParamField path="outDir" type="string" default="./dist">
+  The directory where Astro writes your final build output.
+  
+  ```javascript
+  export default defineConfig({
+    outDir: './build'
+  });
+  ```
+</ParamField>
+
+<ParamField path="publicDir" type="string" default="./public">
+  The directory for static assets that are served as-is.
+  
+  ```javascript
+  export default defineConfig({
+    publicDir: './static'
+  });
+  ```
+</ParamField>
+
+<ParamField path="trailingSlash" type="string" default="ignore">
+  Controls whether route URLs should have trailing slashes. Options: `'always'`, `'never'`, or `'ignore'`.
+  
+  ```javascript
+  export default defineConfig({
+    trailingSlash: 'never'
+  });
+  ```
+</ParamField>
+
+### Server configuration
+
+Configure the development server behavior:
+
+<ParamField path="server.port" type="number" default="4321">
+  The port to run the development server on.
+  
+  ```javascript
+  export default defineConfig({
+    server: {
+      port: 3000
+    }
+  });
+  ```
+</ParamField>
+
+<ParamField path="server.host" type="boolean | string" default="false">
+  Set which network IP addresses the server should listen on. Set to `true` to listen on all addresses.
+  
+  ```javascript
+  export default defineConfig({
+    server: {
+      host: true
+    }
+  });
+  ```
+</ParamField>
+
+### Build configuration
+
+Customize the build output:
+
+<ParamField path="build.format" type="string" default="directory">
+  Controls the file format of each page's build output. Options: `'file'` or `'directory'`.
+  
+  ```javascript
+  export default defineConfig({
+    build: {
+      format: 'file'  // Generates about.html instead of about/index.html
+    }
+  });
+  ```
+</ParamField>
+
+<Note>
+  The minimal starter template uses Astro's default configuration. You can add any of these options as your project grows.
+</Note>
+
+## TypeScript configuration
+
+The `tsconfig.json` file configures TypeScript's behavior in your project. This starter uses Astro's strict preset for maximum type safety.
+
+### Base configuration
+
+```json tsconfig.json
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}
+```
+
+### Configuration breakdown
+
+<ParamField path="extends" type="string">
+  Inherits settings from Astro's strict TypeScript configuration. This provides recommended TypeScript settings optimized for Astro projects.
+  
+  **Available presets:**
+  - `astro/tsconfigs/base` - Basic TypeScript support
+  - `astro/tsconfigs/strict` - Strict type checking (recommended)
+  - `astro/tsconfigs/strictest` - Maximum type safety
+</ParamField>
+
+<ParamField path="include" type="array">
+  Specifies which files TypeScript should process:
+  - `.astro/types.d.ts` - Auto-generated type definitions
+  - `**/*` - All files in the project
+</ParamField>
+
+<ParamField path="exclude" type="array">
+  Excludes the `dist` directory (build output) from TypeScript processing.
+</ParamField>
+
+### Customizing TypeScript settings
+
+You can add compiler options to override or extend the base configuration:
+
+<CodeGroup>
+
+```json Custom compiler options
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"]
+    }
+  }
+}
+```
+
+```json Relaxed strict mode
+{
+  "extends": "astro/tsconfigs/base",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}
+```
+
+</CodeGroup>
+
+<Info>
+  Path aliases defined in `tsconfig.json` must also be configured in `astro.config.mjs` using the `vite.resolve.alias` option for runtime resolution.
+</Info>
+
+## Environment-specific configuration
+
+You can use environment variables to configure different settings for development and production:
+
+```javascript astro.config.mjs
+import { defineConfig } from 'astro/config';
+
+export default defineConfig({
+  site: process.env.SITE_URL || 'http://localhost:4321',
+  server: {
+    port: process.env.PORT ? parseInt(process.env.PORT) : 4321
+  }
+});
+```
+
+<Warning>
+  Always validate and sanitize environment variables before using them in your configuration to prevent security issues.
+</Warning>
+
+## Configuration best practices
+
+<Accordion title="Use TypeScript for configuration">
+  The `astro.config.mjs` file includes `// @ts-check` at the top to enable TypeScript checking in JavaScript files. This catches configuration errors before runtime.
+</Accordion>
+
+<Accordion title="Start minimal, add as needed">
+  The starter template provides a minimal configuration. Add options only when you need them to keep your configuration maintainable.
+</Accordion>
+
+<Accordion title="Leverage presets">
+  Use Astro's TypeScript presets (`strict`, `strictest`) rather than configuring all compiler options manually. This ensures compatibility with Astro's build system.
+</Accordion>
+
+<Accordion title="Document custom settings">
+  If you add non-standard configuration options, document why they're needed for future maintainers.
+</Accordion>
+
+## Next steps
+
+- Explore available [npm scripts](/reference/commands) for development and deployment
+- Learn about [Astro's full configuration API](https://docs.astro.build/en/reference/configuration-reference/)
+- Review [TypeScript configuration options](https://www.typescriptlang.org/tsconfig)

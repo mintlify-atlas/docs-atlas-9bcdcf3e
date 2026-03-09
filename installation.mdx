@@ -1,0 +1,341 @@
+---
+title: Installation
+description: Detailed installation guide for the Astro Landing Page template
+---
+
+This guide walks you through installing and setting up the Astro Landing Page template in detail.
+
+## System requirements
+
+Before installing, ensure your system meets these requirements:
+
+- **Node.js** - version `18.17.1` or `20.3.0` or higher (run `node -v` to check)
+- **A package manager** - npm (included with Node.js), yarn, or pnpm
+- **Terminal/Command line** access
+- **Text editor or IDE** (VS Code recommended)
+
+<Warning>
+  Node.js versions below 18.17.1 are not supported. If you're on an older version, update Node.js before proceeding.
+</Warning>
+
+## Installation methods
+
+You can install the template in two ways:
+
+### Method 1: Using the Astro CLI (Recommended)
+
+The easiest way to get started is using Astro's official CLI:
+
+```bash
+npm create astro@latest -- --template minimal
+```
+
+This command will:
+1. Download the latest minimal Astro template
+2. Prompt you for project configuration
+3. Set up the project structure
+4. Optionally install dependencies and initialize git
+
+### Method 2: Manual setup
+
+If you prefer manual control, you can set up the project yourself:
+
+<Steps>
+  <Step title="Create project directory">
+    ```bash
+    mkdir my-astro-landing-page
+    cd my-astro-landing-page
+    ```
+  </Step>
+
+  <Step title="Initialize package.json">
+    Create a `package.json` file with the required dependencies:
+
+    ```json
+    {
+      "name": "my-astro-landing-page",
+      "type": "module",
+      "version": "0.0.1",
+      "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro"
+      },
+      "dependencies": {
+        "astro": "^5.17.1"
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Install dependencies">
+    <CodeGroup>
+      ```bash npm
+      npm install
+      ```
+
+      ```bash yarn
+      yarn install
+      ```
+
+      ```bash pnpm
+      pnpm install
+      ```
+    </CodeGroup>
+  </Step>
+</Steps>
+
+## Project structure
+
+After installation, your project will have this structure:
+
+```text
+/
+├── public/
+│   ├── favicon.ico
+│   └── favicon.svg
+├── src/
+│   └── pages/
+│       └── index.astro
+├── .gitignore
+├── astro.config.mjs
+├── package.json
+├── package-lock.json
+└── tsconfig.json
+```
+
+### Understanding the files
+
+<AccordionGroup>
+  <Accordion title="package.json">
+    Defines your project dependencies and npm scripts:
+
+    ```json
+    {
+      "name": "teste-blogs",
+      "type": "module",
+      "version": "0.0.1",
+      "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro"
+      },
+      "dependencies": {
+        "astro": "^5.17.1"
+      }
+    }
+    ```
+
+    - **type: "module"** - Enables ES modules
+    - **scripts** - Command shortcuts for development and building
+    - **dependencies** - Only Astro core is required
+  </Accordion>
+
+  <Accordion title="astro.config.mjs">
+    The main configuration file for Astro. The minimal template starts with an empty config:
+
+    ```javascript
+    // @ts-check
+    import { defineConfig } from 'astro/config';
+
+    // https://astro.build/config
+    export default defineConfig({});
+    ```
+
+    You can add integrations, configure build options, and more here.
+  </Accordion>
+
+  <Accordion title="tsconfig.json">
+    TypeScript configuration with strict type checking enabled:
+
+    ```json
+    {
+      "extends": "astro/tsconfigs/strict",
+      "include": [".astro/types.d.ts", "**/*"],
+      "exclude": ["dist"]
+    }
+    ```
+
+    This extends Astro's strict TypeScript config for better type safety.
+  </Accordion>
+
+  <Accordion title="src/pages/index.astro">
+    The main landing page template:
+
+    ```astro
+    ---
+
+    ---
+
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Astro</title>
+      </head>
+      <body>
+        <h1>Astro</h1>
+      </body>
+    </html>
+    ```
+
+    The `---` markers define the component script (frontmatter), and below is the HTML template.
+  </Accordion>
+</AccordionGroup>
+
+## Available commands
+
+Once installed, you have access to these npm scripts:
+
+| Command | Action |
+| :--- | :--- |
+| `npm install` | Installs dependencies |
+| `npm run dev` | Starts local dev server at `localhost:4321` |
+| `npm run build` | Build your production site to `./dist/` |
+| `npm run preview` | Preview your build locally, before deploying |
+| `npm run astro ...` | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI |
+
+<Info>
+  Replace `npm` with `yarn` or `pnpm` if you're using a different package manager.
+</Info>
+
+### Starting the development server
+
+To start building your landing page, run the development server:
+
+<CodeGroup>
+  ```bash npm
+  npm run dev
+  ```
+
+  ```bash yarn
+  yarn dev
+  ```
+
+  ```bash pnpm
+  pnpm dev
+  ```
+</CodeGroup>
+
+The server will start at `http://localhost:4321` with hot module reloading enabled.
+
+### Building for production
+
+When you're ready to deploy, create a production build:
+
+<CodeGroup>
+  ```bash npm
+  npm run build
+  ```
+
+  ```bash yarn
+  yarn build
+  ```
+
+  ```bash pnpm
+  pnpm build
+  ```
+</CodeGroup>
+
+The optimized static files will be output to the `./dist/` directory.
+
+### Previewing the build
+
+Test your production build locally before deploying:
+
+<CodeGroup>
+  ```bash npm
+  npm run preview
+  ```
+
+  ```bash yarn
+  yarn preview
+  ```
+
+  ```bash pnpm
+  pnpm preview
+  ```
+</CodeGroup>
+
+## VS Code setup (Optional)
+
+For the best development experience with VS Code:
+
+<Steps>
+  <Step title="Install the Astro extension">
+    Install the official [Astro VS Code extension](https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode) for syntax highlighting, IntelliSense, and more.
+
+    You can install it directly from VS Code:
+    1. Open the Extensions panel (Ctrl+Shift+X / Cmd+Shift+X)
+    2. Search for "Astro"
+    3. Click Install on the official Astro extension
+  </Step>
+
+  <Step title="Configure settings (optional)">
+    The template includes a `.vscode` directory with recommended settings. VS Code will automatically use these when you open the project.
+  </Step>
+</Steps>
+
+<Tip>
+  The Astro extension provides excellent TypeScript support, auto-formatting for `.astro` files, and helpful error messages.
+</Tip>
+
+## Troubleshooting
+
+### Port 4321 is already in use
+
+If port 4321 is already in use, Astro will automatically try the next available port. You can also specify a custom port:
+
+```bash
+npm run dev -- --port 3000
+```
+
+### Module not found errors
+
+If you see module not found errors, try deleting `node_modules` and reinstalling:
+
+<CodeGroup>
+  ```bash npm
+  rm -rf node_modules package-lock.json
+  npm install
+  ```
+
+  ```bash yarn
+  rm -rf node_modules yarn.lock
+  yarn install
+  ```
+
+  ```bash pnpm
+  rm -rf node_modules pnpm-lock.yaml
+  pnpm install
+  ```
+</CodeGroup>
+
+### TypeScript errors
+
+If you see TypeScript errors, make sure your dependencies are installed and run:
+
+```bash
+npm run astro check
+```
+
+This will check your project for TypeScript and Astro-specific errors.
+
+## Next steps
+
+Now that you have everything installed, you're ready to start building:
+
+<CardGroup cols={2}>
+  <Card title="Quick start guide" icon="rocket" href="/quickstart">
+    Follow the quickstart to build your first landing page
+  </Card>
+  <Card title="Astro documentation" icon="book" href="https://docs.astro.build">
+    Learn more about Astro's features and capabilities
+  </Card>
+</CardGroup>

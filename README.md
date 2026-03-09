@@ -1,28 +1,18 @@
-# Mintlify Starter Kit
+# Astro Landing Page Example Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Documentation for the Astro Landing Page Example - a minimal starter template for building fast, modern landing pages with Astro.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## About this project
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+This documentation covers:
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+- Getting started with the template
+- Project structure and organization
+- Development workflow
+- Configuration options
+- Deployment guides
 
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
-
-```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
+**[View the documentation](/)** to get started.
 
 ## Development
 

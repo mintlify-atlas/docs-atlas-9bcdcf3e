@@ -1,0 +1,203 @@
+---
+title: Project Structure
+description: Understand the directory structure and organization of your Astro landing page project
+---
+
+This guide explains the structure of the Astro landing page project and the purpose of each directory and file.
+
+## Overview
+
+The project follows Astro's minimal starter template structure, optimized for building static landing pages:
+
+```text
+/
+├── .vscode/              # VS Code configuration
+├── public/               # Static assets
+│   ├── favicon.ico
+│   └── favicon.svg
+├── src/                  # Source code
+│   └── pages/            # Page routes
+│       └── index.astro   # Homepage
+├── .gitignore            # Git ignore rules
+├── astro.config.mjs      # Astro configuration
+├── package.json          # Dependencies and scripts
+└── tsconfig.json         # TypeScript configuration
+```
+
+## Core Directories
+
+<AccordionGroup>
+  <Accordion title="src/pages/">
+    Contains your Astro pages that become routes in your application.
+
+    - Each `.astro` or `.md` file becomes a route based on its filename
+    - `index.astro` maps to `/` (homepage)
+    - Nested files create nested routes (e.g., `about.astro` → `/about`)
+
+    **Example page structure** (src/pages/index.astro:1):
+
+    ```astro
+    ---
+    // Component script (frontmatter)
+    ---
+
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Astro</title>
+      </head>
+      <body>
+        <h1>Astro</h1>
+      </body>
+    </html>
+    ```
+  </Accordion>
+
+  <Accordion title="public/">
+    Stores static assets that are served directly without processing.
+
+    - Files are served at the root path `/`
+    - Currently contains `favicon.ico` and `favicon.svg`
+    - Add images, fonts, and other static files here
+    - Files are **not** processed by Astro's build system
+
+    <Tip>
+      Reference public assets using absolute paths like `/favicon.svg` in your components.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="src/components/" default>
+    Though not present in the minimal template, this is the recommended location for reusable components.
+
+    - Create Astro components (`.astro`)
+    - Add React, Vue, Svelte, or Preact components
+    - Build UI elements like headers, footers, and cards
+
+    <Info>
+      You'll need to create this directory when building out your landing page components.
+    </Info>
+  </Accordion>
+</AccordionGroup>
+
+## Configuration Files
+
+### astro.config.mjs
+
+The main configuration file for your Astro project:
+
+```javascript
+// @ts-check
+import { defineConfig } from 'astro/config';
+
+// https://astro.build/config
+export default defineConfig({});
+```
+
+This minimal configuration uses Astro's defaults. You can extend it to:
+
+- Add integrations (React, Tailwind, etc.)
+- Configure build output settings
+- Set up adapters for SSR
+- Define site metadata
+
+### package.json
+
+Defines project metadata, dependencies, and npm scripts:
+
+```json
+{
+  "name": "teste-blogs",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.17.1"
+  }
+}
+```
+
+**Key scripts:**
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+
+### tsconfig.json
+
+TypeScript configuration using Astro's strict preset:
+
+```json
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}
+```
+
+This provides type checking for `.astro` files and TypeScript code.
+
+## Build Artifacts
+
+<Warning>
+  These directories are generated during development and build. Never commit them to version control.
+</Warning>
+
+<Steps>
+  <Step title=".astro/">
+    Generated during development, contains type definitions and cache files.
+  </Step>
+
+  <Step title="dist/">
+    Created by `npm run build`, contains your production-ready static files.
+  </Step>
+
+  <Step title="node_modules/">
+    Contains installed dependencies from npm.
+  </Step>
+</Steps>
+
+These are already included in `.gitignore`:
+
+```text
+# build output
+dist/
+# generated types
+.astro/
+# dependencies
+node_modules/
+```
+
+## Adding New Directories
+
+As you expand your landing page, consider adding:
+
+<CardGroup cols={2}>
+  <Card title="src/components/" icon="cube">
+    Reusable UI components
+  </Card>
+  <Card title="src/layouts/" icon="table-layout">
+    Page layout templates
+  </Card>
+  <Card title="src/styles/" icon="palette">
+    Global CSS and style files
+  </Card>
+  <Card title="src/assets/" icon="image">
+    Optimized images and media
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+Now that you understand the project structure:
+
+- Learn about [development workflow](/guides/development)
+- Explore [deployment options](/guides/deployment)
+- Start [customizing your landing page](/customization/overview)

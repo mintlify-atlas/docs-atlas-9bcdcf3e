@@ -1,0 +1,340 @@
+---
+title: Development Workflow
+description: Learn how to run, build, and preview your Astro landing page during development
+---
+
+This guide covers the development workflow for your Astro landing page, from initial setup to testing production builds.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- **Node.js** 18.17.1 or higher
+- **npm** (comes with Node.js) or another package manager
+- A code editor (VS Code recommended)
+
+<Info>
+  The project includes VS Code configuration in `.vscode/` for an optimal development experience.
+</Info>
+
+## Initial Setup
+
+<Steps>
+  <Step title="Install dependencies">
+    Navigate to your project directory and install the required packages:
+
+    ```bash
+    npm install
+    ```
+
+    This installs Astro and any other dependencies defined in `package.json`.
+  </Step>
+
+  <Step title="Verify installation">
+    Check that Astro is installed correctly:
+
+    ```bash
+    npm run astro -- --version
+    ```
+
+    You should see version `5.17.1` or higher.
+  </Step>
+</Steps>
+
+## Development Server
+
+### Starting the Server
+
+Launch the development server with hot module replacement:
+
+```bash
+npm run dev
+```
+
+You'll see output similar to:
+
+```text
+  🚀  astro  v5.17.1 started in 123ms
+
+  ┃ Local    http://localhost:4321/
+  ┃ Network  use --host to expose
+```
+
+<Tip>
+  The server runs at `http://localhost:4321` by default. Open this URL in your browser to see your landing page.
+</Tip>
+
+### Hot Module Replacement
+
+Astro automatically reloads your changes:
+
+- **Component changes** - Updates instantly without full page reload
+- **Style changes** - Injected without refresh
+- **Content changes** - Page reloads to show new content
+
+<CodeGroup>
+```astro src/pages/index.astro
+---
+// Edit this frontmatter
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Astro</title>
+  </head>
+  <body>
+    <!-- Changes here appear instantly -->
+    <h1>Astro Landing Page</h1>
+  </body>
+</html>
+```
+
+```bash Terminal
+# Save the file and see changes immediately
+npm run dev
+```
+</CodeGroup>
+
+### Development Options
+
+Customize the dev server behavior:
+
+```bash
+# Expose to network (access from other devices)
+npm run dev -- --host
+
+# Use a different port
+npm run dev -- --port 3000
+
+# Open browser automatically
+npm run dev -- --open
+```
+
+## Building for Production
+
+### Create Production Build
+
+Generate optimized static files:
+
+```bash
+npm run build
+```
+
+The build process:
+
+<Steps>
+  <Step title="Compiles all pages">
+    Astro processes all `.astro` files in `src/pages/` and generates HTML.
+  </Step>
+
+  <Step title="Optimizes assets">
+    - Minifies JavaScript and CSS
+    - Optimizes images
+    - Generates build artifacts
+  </Step>
+
+  <Step title="Outputs to dist/">
+    All production files are written to the `dist/` directory:
+
+    ```text
+    dist/
+    ├── favicon.ico
+    ├── favicon.svg
+    └── index.html
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  The `dist/` directory contains everything you need to deploy. Upload these files to any static hosting service.
+</Note>
+
+### Build Output
+
+After a successful build, you'll see a summary:
+
+```text
+  building client (vite)
+  ✓ built in 456ms
+
+  Complete!
+  Build output: dist/
+```
+
+## Preview Production Build
+
+Test your production build locally before deploying:
+
+```bash
+npm run preview
+```
+
+This starts a local server serving files from `dist/`:
+
+```text
+  🚀  astro  preview started
+
+  ┃ Local    http://localhost:4321/
+```
+
+<Warning>
+  Always run `npm run build` before `npm run preview`. The preview command only serves existing files from `dist/`.
+</Warning>
+
+### Why Preview?
+
+<CardGroup cols={2}>
+  <Card title="Test optimizations" icon="gauge-high">
+    Verify minification and bundling work correctly
+  </Card>
+  <Card title="Check routing" icon="route">
+    Ensure all links and routes function properly
+  </Card>
+  <Card title="Validate assets" icon="image">
+    Confirm images and static files load correctly
+  </Card>
+  <Card title="Performance testing" icon="stopwatch">
+    Measure actual load times and performance
+  </Card>
+</CardGroup>
+
+## Common Development Tasks
+
+### Adding a New Page
+
+Create a new route by adding a file to `src/pages/`:
+
+```bash
+# The file will be accessible at /about
+touch src/pages/about.astro
+```
+
+```astro src/pages/about.astro
+---
+const pageTitle = "About Us";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <h1>{pageTitle}</h1>
+    <p>Learn more about our landing page.</p>
+  </body>
+</html>
+```
+
+### Adding Static Assets
+
+Place files in `public/` to serve them directly:
+
+```bash
+# Add an image
+cp my-logo.png public/logo.png
+```
+
+Reference in your pages:
+
+```astro
+<img src="/logo.png" alt="Logo" />
+```
+
+### Using TypeScript
+
+Astro supports TypeScript out of the box:
+
+```astro src/pages/index.astro
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Default description" }: Props = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <title>{title}</title>
+  </head>
+  <body>
+    <h1>{title}</h1>
+    <p>{description}</p>
+  </body>
+</html>
+```
+
+## Using the Astro CLI
+
+Run Astro CLI commands directly:
+
+```bash
+# Get help
+npm run astro -- --help
+
+# Check for errors
+npm run astro -- check
+
+# Add an integration
+npm run astro add tailwind
+
+# Show Astro info
+npm run astro info
+```
+
+<Tip>
+  The `--` separator passes arguments to the Astro CLI instead of npm.
+</Tip>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Port already in use">
+    If port 4321 is occupied:
+
+    ```bash
+    npm run dev -- --port 3000
+    ```
+  </Accordion>
+
+  <Accordion title="Changes not reflecting">
+    1. Hard refresh your browser (Cmd+Shift+R or Ctrl+Shift+R)
+    2. Restart the dev server
+    3. Clear `.astro/` cache: `rm -rf .astro`
+  </Accordion>
+
+  <Accordion title="Build errors">
+    Check for:
+    - Syntax errors in `.astro` files
+    - Missing imports
+    - TypeScript type errors
+
+    Run type checking:
+    ```bash
+    npm run astro -- check
+    ```
+  </Accordion>
+
+  <Accordion title="Module not found">
+    Reinstall dependencies:
+
+    ```bash
+    rm -rf node_modules package-lock.json
+    npm install
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+Now that you're comfortable with development:
+
+- Learn about [deployment options](/guides/deployment)
+- Explore [project structure](/guides/project-structure)
+- Start [customizing components](/customization/overview)
